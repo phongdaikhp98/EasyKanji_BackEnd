@@ -68,8 +68,13 @@ public class QuizMultipleController {
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Success"),
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 500, message = "Internal server error") })
-    public Quiz_Multiple createQuizMultiple(@Valid @RequestBody Quiz_Multiple quizMultipleID) {
-        return quizMultipleRepository.save(quizMultipleID);
+    public ApiResDTO createQuizMultiple(@Valid @RequestBody Quiz_Multiple quizMultipleID) {
+        try {
+            return ApiResDTO.success(quizMultipleRepository.save(quizMultipleID), "Add quiz multiple successfull");
+        }catch (Exception e){
+            e.printStackTrace();
+            return ApiResDTO.fail(null, "Add quiz multiple fail");
+        }
     }
 
     @PutMapping("/quizzesMultiple/{id}")

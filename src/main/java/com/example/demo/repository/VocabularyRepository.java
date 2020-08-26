@@ -21,4 +21,6 @@ public interface VocabularyRepository extends JpaRepository<Vocabulary, Long> {
 
     @Query(value = "SELECT * from vocabulary ", nativeQuery = true)
     Page<Vocabulary> findVocabularyPaging(Pageable pageable);
+
+    Vocabulary findByHiragana(String hiragana);
 }

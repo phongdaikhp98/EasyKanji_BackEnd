@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.Kanji;
+import com.example.demo.entity.Level;
 import com.example.demo.entity.customEntity.KanjiAndSinoOnly;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,4 +26,6 @@ public interface KanjiRepository extends JpaRepository<Kanji, Long> {
 
     @Query(value = "SELECT * from kanji ", nativeQuery = true)
     Page<Kanji> findKanjiPaging(Pageable pageable);
+
+    Kanji findByKanji(String kanji);
 }

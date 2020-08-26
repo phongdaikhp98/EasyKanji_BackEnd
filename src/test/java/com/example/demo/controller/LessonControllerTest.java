@@ -6,10 +6,14 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.junit4.SpringRunner;
+
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,7 +35,7 @@ public class LessonControllerTest {
     @Test
     @Rollback(false)
     @Order(1)
-    public void testCreateProduct() {
+    public void testCreateLesson() {
         Lesson savedLesson = new Lesson();
         savedLesson.setName("Lesson 100");
         savedLesson.setLevel_id((long) 4);
@@ -43,7 +47,7 @@ public class LessonControllerTest {
 
     @Test
     @Order(2)
-    public void testFindLessontByID() {
+    public void testFindLessontByName() {
         Lesson findLesson = lessonRepository.findByName("Lesson 100");
         assertThat(findLesson.getName()).isEqualTo("Lesson 100");
     }

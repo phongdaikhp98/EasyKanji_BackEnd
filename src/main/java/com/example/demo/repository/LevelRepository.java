@@ -13,4 +13,5 @@ public interface LevelRepository extends JpaRepository<Level, Long> {
     @Query(value = "SELECT * from level ", nativeQuery = true)
     Page<Level> findLevelPaging(Pageable pageable);
 
+    Level findByName(String name);
 }

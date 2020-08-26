@@ -107,18 +107,18 @@ public class AuthController {
 			@ApiResponse(code = 500, message = "Internal server error") })
 	public ApiResDTO authenticateUserv2(@Valid @RequestBody SigninDTO signinDTO) {
 		User user = userRepository.checkEmail(signinDTO.getEmail());
+
+
 		if(user == null){
-			return ApiResDTO.fail(null,"fail");
+			return ApiResDTO.fail(null,"email doesn't exist");
 		}
 
-
-		if(!signinDTO.getPassword().equals("123456")){
-			return ApiResDTO.fail(null, "fail");
+		boolean result = encoder.matches(signinDTO.getPassword(), user.getPassword());
+		if(result == false){
+			return ApiResDTO.fail(null, "password doesn't match");
 		}else{
-//			SecurityContextHolder.getContext().setAuthentication(authentication);
+
 			String jwt = jwtUtils.generateJwtToken(user);
-//			Au
-//			UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 			List<String> roles = new ArrayList<>();
 			user.getRoles().forEach(role -> {
 				roles.add(role.getName().name());

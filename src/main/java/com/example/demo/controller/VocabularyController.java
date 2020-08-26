@@ -69,8 +69,13 @@ public class VocabularyController {
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Success"),
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 500, message = "Internal server error") })
-    public Vocabulary createVocabulary(@Valid @RequestBody Vocabulary vocabulary) {
-        return vocabularyRepository.save(vocabulary);
+    public ApiResDTO createVocabulary(@Valid @RequestBody Vocabulary vocabulary) {
+        try {
+            return ApiResDTO.success(vocabularyRepository.save(vocabulary), "Add vocabulary successfull");
+        }catch (Exception e){
+            e.printStackTrace();
+            return ApiResDTO.fail(null, "Add vocabulary fail");
+        }
     }
 
     @PutMapping("/vocabs/{id}")

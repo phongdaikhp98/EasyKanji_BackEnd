@@ -23,4 +23,6 @@ public interface QuizMultipleRepository extends JpaRepository<Quiz_Multiple, Lon
 
     @Query(value = "SELECT * from quiz_multiple ", nativeQuery = true)
     Page<Quiz_Multiple> findQuizMultipkePaging(Pageable pageable);
+
+    Quiz_Multiple findByQuestion(String question);
 }
