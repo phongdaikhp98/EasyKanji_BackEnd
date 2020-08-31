@@ -71,7 +71,7 @@ public class VocabularyController {
             @ApiResponse(code = 500, message = "Internal server error") })
     public ApiResDTO createVocabulary(@Valid @RequestBody Vocabulary vocabulary) {
         try {
-            return ApiResDTO.success(vocabularyRepository.save(vocabulary), "Add vocabulary successfull");
+            return ApiResDTO.success(vocabularyRepository.save(vocabulary), "Add vocabulary successfully");
         }catch (Exception e){
             e.printStackTrace();
             return ApiResDTO.fail(null, "Add vocabulary fail");

@@ -56,12 +56,11 @@ public class LevelController {
             @ApiResponse(code = 500, message = "Internal server error") })
     public ApiResDTO createLevel(@Valid @RequestBody Level level) {
         try {
-            return ApiResDTO.success(levelRepository.save(level), "Add lesson successfull");
+            return ApiResDTO.success(levelRepository.save(level), "Add level successfully");
         }catch (Exception e){
             e.printStackTrace();
-            return ApiResDTO.fail(null, "Add lesson fail");
-        }
-    }
+            return ApiResDTO.fail(null, "Add level fail");
+        }    }
 
     @PutMapping("/levels/{id}")
     @ApiOperation(value = "Update level by ID")

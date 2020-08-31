@@ -82,10 +82,10 @@ public class KanjiController {
             @ApiResponse(code = 500, message = "Internal server error") })
     public ApiResDTO createKanji(@Valid @RequestBody Kanji kanji) {
         try {
-            return ApiResDTO.success(kanjiRepository.save(kanji), "Add user successfull");
+            return ApiResDTO.success(kanjiRepository.save(kanji), "Add kanji successfully");
         }catch (Exception e){
             e.printStackTrace();
-            return ApiResDTO.fail(null, "Add user fail");
+            return ApiResDTO.fail(null, "Add kanji fail");
         }
     }
 
@@ -122,7 +122,7 @@ public class KanjiController {
 
         Kanji kanji = kanjiRepository.findById(kanjiId).orElse(null);
         if(kanji == null){
-            return ApiResDTO.success(null,"Kanji doesn't exist: " + kanjiId);
+            return ApiResDTO.fail(null,"Kanji doesn't exist: " + kanjiId);
         }
 
         kanjiRepository.delete(kanji);
@@ -164,6 +164,13 @@ public class KanjiController {
             @ApiResponse(code = 500, message = "Internal server error") })
     public ResponseEntity<Page<KanjiEs>> searchKanji(@Valid @RequestBody KanjiSearchDTO kanjiSearchDTO) {
         String keyword = kanjiSearchDTO.getKeyword();
+        if(keyword.equals(null) || keyword.equals("")){
+            new ResponseEntity<>("String cann't be null or empty", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        if(keyword.matches(".*\\w.*"))
+        {
+            new ResponseEntity<>("String cann't be all white space", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
 //        MojiConverter converter = new MojiConverter();
         for(char c : keyword.toCharArray()){

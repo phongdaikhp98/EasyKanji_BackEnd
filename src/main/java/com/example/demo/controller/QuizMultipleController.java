@@ -46,7 +46,7 @@ public class QuizMultipleController {
         if (quiz_multiples.isEmpty()) {
             return ApiResDTO.fail(null, "Don't have quiz_multiples");
         }
-        return ApiResDTO.success(quiz_multiples, "Get list quiz_multiples successfully!");
+        return ApiResDTO.success(quiz_multiples, "Get list quiz multiples successfully!");
     }
 
     @GetMapping("/quizzesMultiple/{id}")
@@ -60,7 +60,7 @@ public class QuizMultipleController {
             return ApiResDTO.fail(null,"Level doesn't exist: " + quizMultipleID);
         }
 
-        return ApiResDTO.success(quiz_multiple,"Get quiz_multiple by ID successfully!");
+        return ApiResDTO.success(quiz_multiple,"Get quiz multiple by ID successfully!");
     }
 
     @PostMapping("/quizzesMultiple")
@@ -70,7 +70,7 @@ public class QuizMultipleController {
             @ApiResponse(code = 500, message = "Internal server error") })
     public ApiResDTO createQuizMultiple(@Valid @RequestBody Quiz_Multiple quizMultipleID) {
         try {
-            return ApiResDTO.success(quizMultipleRepository.save(quizMultipleID), "Add quiz multiple successfull");
+            return ApiResDTO.success(quizMultipleRepository.save(quizMultipleID), "Add quiz multiple successfully");
         }catch (Exception e){
             e.printStackTrace();
             return ApiResDTO.fail(null, "Add quiz multiple fail");
@@ -94,10 +94,12 @@ public class QuizMultipleController {
         quiz_multiple.setAnswerC(quizMultipleDetails.getAnswerC());
         quiz_multiple.setAnswerD(quizMultipleDetails.getAnswerD());
         quiz_multiple.setCorrectAnswer(quizMultipleDetails.getCorrectAnswer());
+        quiz_multiple.setLevel_id(quizMultipleDetails.getLevel_id());
+        quiz_multiple.setLesson_id(quizMultipleDetails.getLesson_id());
 
         quizMultipleRepository.save(quiz_multiple);
 
-        return ApiResDTO.success(quiz_multiple,"Update quiz_multiple successfully!");
+        return ApiResDTO.success(quiz_multiple,"Update quiz multiple successfully!");
     }
 
     @DeleteMapping("/quizzesMultiple/{id}")
@@ -108,11 +110,12 @@ public class QuizMultipleController {
     public ApiResDTO deleteQuizMultiple(@PathVariable(value = "id") Long quizMultipleID) {
         Quiz_Multiple quiz_multiple = quizMultipleRepository.findById(quizMultipleID).orElse(null);
         if(quiz_multiple == null){
-            return ApiResDTO.success(null,"Level doesn't exist: " + quizMultipleID);
+            return ApiResDTO.success(null,"Quiz multiple doesn't exist: " + quizMultipleID);
         }
 
         quizMultipleRepository.delete(quiz_multiple);
-        return ApiResDTO.success(null, "Delete level successfullly!");
+        return ApiResDTO.success(null, "Delete quiz multiple successfullly!");
+        
     }
 
     @GetMapping("lesson/{id}/quizzesMultiple")

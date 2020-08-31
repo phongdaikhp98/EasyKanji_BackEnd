@@ -71,7 +71,7 @@ public class LessonController {
             @ApiResponse(code = 500, message = "Internal server error") })
     public ApiResDTO createLesson(@Valid @RequestBody Lesson lesson) {
         try {
-            return ApiResDTO.success(lessonRepository.save(lesson), "Add lesson successfull");
+            return ApiResDTO.success(lessonRepository.save(lesson), "Add lesson successfully");
         }catch (Exception e){
             e.printStackTrace();
             return ApiResDTO.fail(null, "Add lesson fail");
